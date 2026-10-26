@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@theme {
+  --color-midnight: #080D1B;
+  --color-cosmic: #101E38;
+  --color-cosmic-card: rgba(16, 30, 56, 0.65);
+  --color-electric: #168BFF;
+  --color-electric-blue: #168BFF;
+  --color-nebula: #48D9E8;
+  --color-nebula-cyan: #48D9E8;
+  --color-star-white: #F5F7FC;
+  --color-stardust: #AEBBD0;
+
+  --color-surface: #0e1321;
+  --color-surface-dim: #0e1321;
+  --color-surface-bright: #343949;
+  --color-surface-container-lowest: #090e1c;
+  --color-surface-container-low: #161b2a;
+  --color-surface-container: #1a1f2e;
+  --color-surface-container-high: #252a39;
+  --color-surface-container-highest: #2f3444;
+
+  --font-alexandria: 'Alexandria', sans-serif;
+  --font-readex: 'Readex Pro', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+}
+
+:root {
+  --font-ar-display: 'Alexandria', sans-serif;
+  --font-ar-body: 'Readex Pro', sans-serif;
+  --font-en-sans: 'Inter', sans-serif;
+}
+
+/* Base resets & typography direction */
+html {
+  background-color: #080D1B;
+  color: #F5F7FC;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: #080D1B;
+  color: #F5F7FC;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+html[lang="ar"] body {
+  font-family: var(--font-ar-body);
+  direction: rtl;
+}
+
+html[lang="en"] body {
+  font-family: var(--font-en-sans);
+  direction: ltr;
+}
+
+.headline-font {
+  font-family: var(--font-ar-display);
+  letter-spacing: -0.015em;
+}
+
+html[lang="en"] .headline-font {
+  font-family: var(--font-en-sans);
+  letter-spacing: -0.025em;
+}
+
+/* Cosmic background star pattern */
+.star-bg {
+  background-image: 
+    radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 140px 170px, rgba(72, 217, 232, 0.8), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 240px 70px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 380px 290px, rgba(22, 139, 255, 0.7), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 490px 130px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 620px 210px, rgba(72, 217, 232, 0.6), rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 650px 350px;
+}
+
+.celestial-glow {
+  background: radial-gradient(circle at 50% 30%, rgba(72, 217, 232, 0.12) 0%, rgba(22, 139, 255, 0.05) 45%, transparent 70%);
+}
+
+.orbital-ring {
+  border: 1px solid rgba(72, 217, 232, 0.14);
+  border-radius: 9999px;
+}
+
+.card-border {
+  border: 1px solid rgba(174, 187, 208, 0.12);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-border:hover {
+  border-color: rgba(72, 217, 232, 0.35);
+  box-shadow: 0 10px 30px -10px rgba(22, 139, 255, 0.25);
+}
+
+/* Accessible reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
