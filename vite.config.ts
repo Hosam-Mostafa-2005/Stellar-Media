@@ -110,23 +110,38 @@ function contactApiPlugin(initialEnv: Record<string, string>): Plugin {
 
             const { fullName, email, company, service, message } = body;
 
+            // Type guard to ensure value is a valid string
+            const isString = (val: unknown): val is string => typeof val === 'string';
+
             // Server-side field validation
             const errors: Record<string, string> = {};
-            if (!fullName || typeof fullName !== 'string' || fullName.trim().length < 3) {
+            if (!isString(fullName) || fullName.trim().length < 3) {
               errors.fullName = 'Full name must be at least 3 characters.';
             }
-            if (!email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+            if (!isString(email) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
               errors.email = 'A valid email address is required.';
             }
-            if (!message || typeof message !== 'string' || message.trim().length < 10) {
+            if (!isString(message) || message.trim().length < 10) {
               errors.message = 'Project description must be at least 10 characters.';
             }
 
-            if (Object.keys(errors).length > 0) {
+            if (
+              Object.keys(errors).length > 0 ||
+              !isString(fullName) ||
+              !isString(email) ||
+              !isString(message)
+            ) {
               res.statusCode = 400;
               res.end(JSON.stringify({ success: false, error: 'Validation failed.', fieldErrors: errors }));
               return;
             }
+
+            // Strictly narrowed local variables (100% type-safe strings)
+            const cleanFullName = fullName.trim();
+            const cleanEmail = email.trim();
+            const cleanMessage = message.trim();
+            const cleanCompany = isString(company) && company.trim() ? company.trim() : 'Not specified';
+            const cleanService = isString(service) && service.trim() ? service.trim() : 'General Inquiry';
 
             const resendApiKey = getVal('RESEND_API_KEY');
             const recipientEmail = getVal('CONTACT_RECIPIENT_EMAIL', 'inquiries@stellarmedia.ae');
@@ -158,23 +173,23 @@ function contactApiPlugin(initialEnv: Record<string, string>): Plugin {
                 body: JSON.stringify({
                   from: senderEmail,
                   to: recipientEmail,
-                  reply_to: email.trim(),
-                  subject: `[Stellar Media Inquiry] ${fullName.trim()} — ${service || 'General'}`,
+                  reply_to: cleanEmail,
+                  subject: `[Stellar Media Inquiry] ${cleanFullName} — ${cleanService}`,
                   html: `
                     <div style="font-family: sans-serif; background-color: #080D1B; color: #F5F7FC; padding: 32px; border-radius: 12px;">
                       <h2 style="color: #48D9E8; margin-top: 0;">New Consultation Request — Stellar Media</h2>
                       <p style="color: #AEBBD0; font-size: 14px;">Received via stellarmedia.ae official contact portal.</p>
                       <hr style="border: 0; border-top: 1px solid rgba(174,187,208,0.2); margin: 20px 0;" />
                       <table style="width: 100%; font-size: 14px; color: #F5F7FC;">
-                        <tr><td style="width: 140px; color: #48D9E8; padding: 6px 0;"><strong>Full Name:</strong></td><td>${fullName.trim()}</td></tr>
-                        <tr><td style="color: #48D9E8; padding: 6px 0;"><strong>Email Address:</strong></td><td><a href="mailto:${email.trim()}" style="color: #168BFF;">${email.trim()}</a></td></tr>
-                        <tr><td style="color: #48D9E8; padding: 6px 0;"><strong>Company/Brand:</strong></td><td>${company ? company.trim() : 'Not specified'}</td></tr>
-                        <tr><td style="color: #48D9E8; padding: 6px 0;"><strong>Service Discipline:</strong></td><td>${service ? service.trim() : 'General Inquiry'}</td></tr>
+                        <tr><td style="width: 140px; color: #48D9E8; padding: 6px 0;"><strong>Full Name:</strong></td><td>${cleanFullName}</td></tr>
+                        <tr><td style="color: #48D9E8; padding: 6px 0;"><strong>Email Address:</strong></td><td><a href="mailto:${cleanEmail}" style="color: #168BFF;">${cleanEmail}</a></td></tr>
+                        <tr><td style="color: #48D9E8; padding: 6px 0;"><strong>Company/Brand:</strong></td><td>${cleanCompany}</td></tr>
+                        <tr><td style="color: #48D9E8; padding: 6px 0;"><strong>Service Discipline:</strong></td><td>${cleanService}</td></tr>
                       </table>
                       <hr style="border: 0; border-top: 1px solid rgba(174,187,208,0.2); margin: 20px 0;" />
                       <div style="background-color: #101E38; padding: 16px; border-radius: 8px; border: 1px solid rgba(72,217,232,0.2);">
                         <strong style="color: #48D9E8; display: block; margin-bottom: 8px;">Project Brief & Objectives:</strong>
-                        <p style="white-space: pre-wrap; margin: 0; color: #F5F7FC; line-height: 1.6;">${message.trim()}</p>
+                        <p style="white-space: pre-wrap; margin: 0; color: #F5F7FC; line-height: 1.6;">${cleanMessage}</p>
                       </div>
                       <p style="margin-top: 24px; font-size: 11px; color: #AEBBD0; font-family: monospace;">TIMESTAMP: ${new Date().toISOString()} • AUH</p>
                     </div>
