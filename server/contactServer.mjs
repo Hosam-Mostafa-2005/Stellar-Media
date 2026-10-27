@@ -174,6 +174,21 @@ app.post("/api/contact", async (req, res) => {
   const cleanCompany = isString(company) && company.trim() ? company.trim() : "Not specified";
   const cleanService = isString(service) && service.trim() ? service.trim() : "General Inquiry";
 
+  // دالة لتعقيم النصوص قبل إدراجها في قالب HTML لمنع حقن الأكواد (XSS/HTML Injection)
+  const escapeHtml = (str) =>
+    String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+
+  const safeFullName = escapeHtml(cleanFullName);
+  const safeEmail = escapeHtml(cleanEmail);
+  const safeCompany = escapeHtml(cleanCompany);
+  const safeService = escapeHtml(cleanService);
+  const safeMessage = escapeHtml(cleanMessage);
+
   // 3. جلب بيانات الإعدادات الخاصة بـ Resend
   const activeResendKey = getEnv("RESEND_API_KEY");
   const activeRecipient = getEnv("CONTACT_RECIPIENT_EMAIL", "inquiries@stellarmedia.ae");
@@ -212,15 +227,15 @@ app.post("/api/contact", async (req, res) => {
             <p style="color: #AEBBD0; font-size: 14px;">Received via stellarmedia.ae official contact portal.</p>
             <hr style="border: 0; border-top: 1px solid rgba(174,187,208,0.2); margin: 20px 0;" />
             <table style="width: 100%; font-size: 14px; color: #F5F7FC;">
-              <tr><td style="width: 140px; color: #48D9E8; padding: 6px 0;"><strong>Full Name:</strong></td><td>${cleanFullName}</td></tr>
-              <tr><td style="color: #48D9E8; padding: 6px 0;"><strong>Email Address:</strong></td><td><a href="mailto:${cleanEmail}" style="color: #168BFF;">${cleanEmail}</a></td></tr>
-              <tr><td style="color: #48D9E8; padding: 6px 0;"><strong>Company/Brand:</strong></td><td>${cleanCompany}</td></tr>
-              <tr><td style="color: #48D9E8; padding: 6px 0;"><strong>Service Discipline:</strong></td><td>${cleanService}</td></tr>
+              <tr><td style="width: 140px; color: #48D9E8; padding: 6px 0;"><strong>Full Name:</strong></td><td>${safeFullName}</td></tr>
+              <tr><td style="color: #48D9E8; padding: 6px 0;"><strong>Email Address:</strong></td><td><a href="mailto:${safeEmail}" style="color: #168BFF;">${safeEmail}</a></td></tr>
+              <tr><td style="color: #48D9E8; padding: 6px 0;"><strong>Company/Brand:</strong></td><td>${safeCompany}</td></tr>
+              <tr><td style="color: #48D9E8; padding: 6px 0;"><strong>Service Discipline:</strong></td><td>${safeService}</td></tr>
             </table>
             <hr style="border: 0; border-top: 1px solid rgba(174,187,208,0.2); margin: 20px 0;" />
             <div style="background-color: #101E38; padding: 16px; border-radius: 8px; border: 1px solid rgba(72,217,232,0.2);">
               <strong style="color: #48D9E8; display: block; margin-bottom: 8px;">Project Brief & Objectives:</strong>
-              <p style="white-space: pre-wrap; margin: 0; color: #F5F7FC; line-height: 1.6;">${cleanMessage}</p>
+              <p style="white-space: pre-wrap; margin: 0; color: #F5F7FC; line-height: 1.6;">${safeMessage}</p>
             </div>
             <p style="margin-top: 24px; font-size: 11px; color: #AEBBD0; font-family: monospace;">TIMESTAMP: ${new Date().toISOString()} • AUH</p>
           </div>

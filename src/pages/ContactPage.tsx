@@ -180,7 +180,7 @@ export const ContactPage: React.FC = () => {
               </div>
               <div className="flex items-center gap-1.5 text-xs text-[#AEBBD0] font-mono">
                 <MapPin className="w-3.5 h-3.5 text-[#48D9E8]" />
-                <span>AUH • 24.4539° N, 54.3773° E</span>
+                <span>{t.common.coordinates}</span>
               </div>
             </div>
 

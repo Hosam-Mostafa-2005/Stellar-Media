@@ -35,7 +35,7 @@ export const NotFoundPage: React.FC = () => {
             to="/services"
             variant="secondary"
             size="lg"
-            icon={<ArrowRight className="w-4 h-4" />}
+            icon={<ArrowRight className="w-4 h-4 rtl:rotate-180" />}
           >
             {t.notFound.exploreServices}
           </Button>

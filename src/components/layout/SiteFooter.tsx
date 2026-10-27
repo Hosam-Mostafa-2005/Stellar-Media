@@ -133,7 +133,7 @@ export const SiteFooter: React.FC = () => {
           {/* Col 4: Concept Projects */}
           <div className="lg:col-span-3 space-y-4">
             <h3 className="text-xs font-semibold uppercase tracking-wider text-[#F5F7FC] font-mono">
-              {language === "ar" ? "مشاريع تصورية" : "Concept Projects"}
+              {language === "ar" ? "دراسات حالة وأعمال" : "Selected Case Studies"}
             </h3>
             <ul className="space-y-2.5 text-sm">
               {projectsData.map((project) => (
@@ -151,7 +151,7 @@ export const SiteFooter: React.FC = () => {
 
             <div className="pt-3">
               <span className="inline-block text-[11px] text-[#48D9E8] bg-[#101E38] border border-[#48D9E8]/20 px-2.5 py-1 rounded">
-                Concept Project / مشروع تصوري
+                {language === "ar" ? "دراسات حالة استوديو" : "Studio Case Studies"}
               </span>
             </div>
           </div>

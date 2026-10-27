@@ -15,7 +15,10 @@ import {
   Infinity as InfinityIcon,
   Eye,
   MapPin,
-  CircleDot,
+  TrendingUp,
+  Target,
+  ShieldCheck,
+  Award,
 } from 'lucide-react';
 
 export const AboutPage: React.FC = () => {
@@ -56,7 +59,7 @@ export const AboutPage: React.FC = () => {
                 href="#philosophy"
                 variant="primary"
                 size="md"
-                icon={<ArrowRight className="w-4 h-4 rtl:rotate-90 ltr:rotate-90" />}
+                icon={<ArrowRight className="w-4 h-4 rotate-90" />}
               >
                 {t.about.heroCta}
               </Button>
@@ -69,7 +72,7 @@ export const AboutPage: React.FC = () => {
         </Container>
       </section>
 
-      {/* 2. STRATEGIC PERSPECTIVE SECTION — EDITORIAL SPLIT (MATCHING STITCH) */}
+      {/* 2. STRATEGIC PERSPECTIVE SECTION — EDITORIAL CRAFT BENTO */}
       <section className="relative py-28 sm:py-36 border-b border-[#AEBBD0]/10">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -113,38 +116,67 @@ export const AboutPage: React.FC = () => {
               </div>
             </div>
 
-            {/* End Column: Astral Geometry Diagram Container */}
+            {/* End Column: Editorial Agency Craft Bento Showcase */}
             <div className="lg:col-span-6 relative">
-              <div className="relative rounded-3xl overflow-hidden bg-[#101E38]/50 border border-[#AEBBD0]/20 p-4 shadow-2xl">
-                <div className="relative rounded-2xl overflow-hidden aspect-square flex items-center justify-center bg-[#090E1C]">
-                  {/* Concentric orbital lines */}
-                  <div className="absolute w-[82%] h-[82%] rounded-full border border-[#48D9E8]/20 pointer-events-none" />
-                  <div className="absolute w-[62%] h-[62%] rounded-full border border-[#168BFF]/25 pointer-events-none" />
-                  <div className="absolute w-[42%] h-[42%] rounded-full border border-[#AEBBD0]/15 pointer-events-none" />
-                  <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#48D9E8]/20 to-transparent pointer-events-none" />
-                  <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#48D9E8]/20 to-transparent pointer-events-none" />
-
-                  {/* Center Core Glyph */}
-                  <div className="relative z-10 flex flex-col items-center justify-center p-8 text-center">
-                    <div className="w-16 h-16 rounded-2xl bg-[#101E38] border border-[#48D9E8]/40 flex items-center justify-center text-[#48D9E8] shadow-[0_0_30px_rgba(72,217,232,0.25)] mb-4">
-                      <Sparkles className="w-8 h-8" />
-                    </div>
-                    <span className="headline-font font-bold text-lg text-[#F5F7FC]">
-                      STELLAR CORE MATRIX
-                    </span>
-                    <span className="text-xs text-[#48D9E8] font-mono tracking-widest mt-1">
-                      01 // ORBITAL ALIGNMENT
-                    </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Bento Card 1: Strategy & Intelligence */}
+                <div className="p-6 rounded-2xl bg-[#101E38]/60 border border-[#AEBBD0]/15 hover:border-[#48D9E8]/40 transition-all duration-300 space-y-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#080D1B] border border-[#AEBBD0]/20 flex items-center justify-center text-[#48D9E8]">
+                    <Target className="w-5 h-5" />
                   </div>
+                  <h3 className="headline-font font-bold text-base text-[#F5F7FC]">
+                    {language === 'ar' ? 'البصيرة الاستراتيجية' : 'Strategic Insight'}
+                  </h3>
+                  <p className="text-xs text-[#AEBBD0] leading-relaxed">
+                    {language === 'ar'
+                      ? 'تحليل السوق والمنافسين وتحديد التموضع الأمثل للعلامة في المشهد الإقليمي.'
+                      : 'Market intelligence and whitespace identification establishing unshakeable positioning.'}
+                  </p>
+                </div>
 
-                  {/* Gradient Scrim */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#090E1C]/90 via-transparent to-transparent pointer-events-none" />
-
-                  {/* Bottom Coordinates Bar */}
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-4 py-2 rounded-xl bg-[#101E38]/90 backdrop-blur-md border border-[#AEBBD0]/20 text-xs">
-                    <span className="text-[#48D9E8] font-mono font-semibold">AUH • SYSTEM</span>
-                    <span className="text-[#AEBBD0]">ABU DHABI · UAE</span>
+                {/* Bento Card 2: High Art Direction */}
+                <div className="p-6 rounded-2xl bg-[#101E38]/60 border border-[#48D9E8]/30 hover:border-[#48D9E8]/60 transition-all duration-300 space-y-3 shadow-[0_0_20px_rgba(72,217,232,0.06)]">
+                  <div className="w-10 h-10 rounded-xl bg-[#080D1B] border border-[#48D9E8]/40 flex items-center justify-center text-[#48D9E8]">
+                    <Sparkles className="w-5 h-5" />
                   </div>
+                  <h3 className="headline-font font-bold text-base text-[#F5F7FC]">
+                    {language === 'ar' ? 'التوجيه الفني الرفيع' : 'High Art Direction'}
+                  </h3>
+                  <p className="text-xs text-[#AEBBD0] leading-relaxed">
+                    {language === 'ar'
+                      ? 'تصميم هويات معمارية ثنائية اللغة وتجارب تغليف فاخرة تخاطب حواس المتلقي.'
+                      : 'Bespoke bilingual typographic architecture and tactile packaging systems.'}
+                  </p>
+                </div>
+
+                {/* Bento Card 3: Digital Experience */}
+                <div className="p-6 rounded-2xl bg-[#101E38]/60 border border-[#AEBBD0]/15 hover:border-[#48D9E8]/40 transition-all duration-300 space-y-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#080D1B] border border-[#AEBBD0]/20 flex items-center justify-center text-[#168BFF]">
+                    <Layers className="w-5 h-5" />
+                  </div>
+                  <h3 className="headline-font font-bold text-base text-[#F5F7FC]">
+                    {language === 'ar' ? 'التجارب الرقمية الفاخرة' : 'Digital Flagships'}
+                  </h3>
+                  <p className="text-xs text-[#AEBBD0] leading-relaxed">
+                    {language === 'ar'
+                      ? 'منصات ويب تفاعلية فائقة السرعة تجمع بين الجماليات التحريرية وسلاسة الأداء.'
+                      : 'High-performance responsive web environments with fluid bilingual choreography.'}
+                  </p>
+                </div>
+
+                {/* Bento Card 4: Discretion & Long-term Partnership */}
+                <div className="p-6 rounded-2xl bg-[#101E38]/60 border border-[#AEBBD0]/15 hover:border-[#48D9E8]/40 transition-all duration-300 space-y-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#080D1B] border border-[#AEBBD0]/20 flex items-center justify-center text-[#48D9E8]">
+                    <ShieldCheck className="w-5 h-5" />
+                  </div>
+                  <h3 className="headline-font font-bold text-base text-[#F5F7FC]">
+                    {language === 'ar' ? 'شراكة والتزام طويل الأمد' : 'Executive Trust'}
+                  </h3>
+                  <p className="text-xs text-[#AEBBD0] leading-relaxed">
+                    {language === 'ar'
+                      ? 'سرية مهنية تامة وحوار شفاف ومستمر يضمن حماية وتطوير القيمة السوقية للعلامة.'
+                      : 'Institutional discretion, rigorous governance, and sustainable equity cultivation.'}
+                  </p>
                 </div>
               </div>
             </div>
@@ -170,7 +202,7 @@ export const AboutPage: React.FC = () => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-mono text-[#48D9E8] tracking-widest font-semibold">
-                    01 // COSMOS
+                    01 // PURPOSE
                   </span>
                   <Eye className="w-4 h-4 text-[#48D9E8]/70" />
                 </div>
@@ -231,7 +263,7 @@ export const AboutPage: React.FC = () => {
         </Container>
       </section>
 
-      {/* 4. WHAT WE BELIEVE — EMOTIONAL CENTERPIECE (ATMOSPHERIC BACKDROP) */}
+      {/* 4. WHAT WE BELIEVE — EMOTIONAL CENTERPIECE */}
       <section className="relative py-32 sm:py-44 border-b border-[#AEBBD0]/10 overflow-hidden flex items-center justify-center">
         {/* Ambient Nebula Layer */}
         <div className="absolute inset-0 z-0 opacity-25 mix-blend-screen pointer-events-none">

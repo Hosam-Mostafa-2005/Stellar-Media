@@ -43,6 +43,9 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const isArabic = language === 'ar';
     document.documentElement.lang = language;
     document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+    document.title = isArabic
+      ? 'Stellar Media | وكالة ستيلار للإبداع والتسويق الرقمي — أبوظبي'
+      : 'Stellar Media | Creative & Digital Marketing Agency — Abu Dhabi';
     if (isArabic) {
       document.body.classList.remove('en-mode');
     } else {

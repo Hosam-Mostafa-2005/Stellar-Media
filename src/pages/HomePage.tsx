@@ -6,6 +6,7 @@ import { projectsData } from '../data/projects';
 import { Button } from '../components/ui/Button';
 import { Container } from '../components/ui/Container';
 import { SectionHeading } from '../components/ui/SectionHeading';
+import { ProjectCarousel } from '../components/portfolio/ProjectCarousel';
 import backgroundAsset from '../assets/background.png';
 import {
   Compass,
@@ -15,16 +16,10 @@ import {
   Layers,
   ArrowRight,
   MapPin,
-  CheckCircle2,
-  Calendar,
-  Eye,
-  ArrowUpRight,
-  Shield,
-  Activity,
 } from 'lucide-react';
 
 export const HomePage: React.FC = () => {
-  const { language, t } = useLanguage();
+  const { language, isRTL, t } = useLanguage();
 
   const getServiceIcon = (iconName: string) => {
     switch (iconName) {
@@ -44,11 +39,11 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="relative overflow-hidden star-bg text-start">
-      {/* 1. COSMIC HERO SECTION — CINEMATIC BLUE NEBULA ATMOSPHERE */}
-      <section className="relative min-h-[88vh] lg:min-h-[94vh] flex items-center overflow-hidden py-24 sm:py-32 lg:py-36">
+      {/* 1. EDITORIAL HERO SECTION — CINEMATIC BLUE NEBULA ATMOSPHERE */}
+      <section className="relative min-h-[64vh] lg:min-h-[72vh] flex items-center overflow-hidden pt-16 pb-10 sm:pt-20 sm:pb-12 lg:pt-24 lg:pb-14">
         {/* Layered Cosmic Nebula & Space Atmospheric Background */}
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none">
-          {/* Base Cosmic Background Asset (Stars & Deep Space Texture) */}
+          {/* Base Cosmic Background Asset */}
           <img
             src={backgroundAsset}
             alt="Stellar Media Cosmic Space Nebula"
@@ -82,7 +77,7 @@ export const HomePage: React.FC = () => {
             }}
           />
 
-          {/* Directional Midnight Gradient: Shields Headline & Text for 100% Crisp Contrast */}
+          {/* Directional Midnight Gradient: Shields Headline & Text for Crisp Contrast */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#080D1B] via-[#080D1B]/85 via-45% to-transparent rtl:bg-gradient-to-l" />
 
           {/* Top & Bottom Atmospheric Vignettes */}
@@ -97,12 +92,18 @@ export const HomePage: React.FC = () => {
               <span>{t.home.heroEyebrow}</span>
             </div>
 
-            {/* Main Confident Editorial Headline — Uncontested Visual Focus */}
-            <h1 className="headline-font text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-[#F5F7FC] leading-[1.12] drop-shadow-sm">
+            {/* Main Confident Editorial Headline */}
+            <h1
+              className={`headline-font font-bold tracking-tight text-[#F5F7FC] drop-shadow-sm ${
+                isRTL
+                  ? 'text-3xl sm:text-5xl md:text-[3.25rem] lg:text-[3.75rem] xl:text-[4.25rem] leading-[1.28] sm:leading-[1.26] lg:leading-[1.24]'
+                  : 'text-4xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[1.12]'
+              }`}
+            >
               {t.home.heroHeadline}
             </h1>
 
-            {/* Supporting Copy — Controlled Width for Flawless Typography */}
+            {/* Supporting Copy */}
             <p className="text-base sm:text-xl lg:text-2xl text-[#AEBBD0] max-w-2xl leading-relaxed font-light">
               {t.home.heroSub}
             </p>
@@ -135,64 +136,31 @@ export const HomePage: React.FC = () => {
         </Container>
       </section>
 
-      {/* 2. ABOUT PREVIEW SECTION — EDITORIAL SPLIT */}
-      <section className="relative py-28 border-t border-[#AEBBD0]/10 overflow-hidden">
+      {/* 2. FEATURED PROJECTS — PREMIUM COVERFLOW CAROUSEL (PLACED IMMEDIATELY BEFORE CAPABILITIES) */}
+      <section className="relative pt-6 pb-12 sm:pt-8 sm:pb-16 lg:pt-10 lg:pb-20 border-t border-[#AEBBD0]/10 overflow-hidden">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            {/* Narrative Column */}
-            <div className="lg:col-span-7 flex flex-col items-start space-y-6">
-              <SectionHeading
-                eyebrow={t.home.aboutTag}
-                title={t.home.aboutHeadline}
-                description={t.home.aboutBody}
-              />
-              <p className="text-base text-[#AEBBD0]/80 leading-relaxed max-w-2xl">
-                {t.home.aboutSecondary}
-              </p>
-
-              <div className="pt-2">
-                <Button
-                  to="/about"
-                  variant="cyan"
-                  icon={<ArrowRight className="w-4 h-4 rtl:rotate-180" />}
-                >
-                  {t.common.learnMore}
-                </Button>
-              </div>
-            </div>
-
-            {/* Editorial Principle Card */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative p-8 sm:p-10 rounded-3xl bg-[#101E38]/60 border border-[#AEBBD0]/15 shadow-2xl overflow-hidden">
-                <div className="relative z-10 flex flex-col gap-6">
-                  <div className="flex items-center justify-between pb-6 border-b border-[#AEBBD0]/10">
-                    <span className="text-xs uppercase tracking-widest text-[#AEBBD0]/60 font-inter">
-                      {t.home.quoteTitle}
-                    </span>
-                    <span className="text-xs text-[#48D9E8] font-mono">01 // COSMOS</span>
-                  </div>
-
-                  <blockquote className="headline-font text-xl sm:text-2xl font-semibold text-[#F5F7FC] leading-relaxed italic">
-                    {t.home.quoteText}
-                  </blockquote>
-
-                  <div className="flex items-center gap-3 pt-2">
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#168BFF]" />
-                    <span className="text-xs text-[#AEBBD0]">
-                      {language === 'ar'
-                        ? 'رؤية إبداعية مرتكزة في أبوظبي بمعايير عالمية'
-                        : 'Creative vision based in Abu Dhabi with world-class standards'}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-4 sm:mb-6 gap-6">
+            <SectionHeading
+              eyebrow={t.home.workTag}
+              title={t.home.workTitle}
+              description={t.home.workSub}
+            />
+            <Button
+              to="/work"
+              variant="secondary"
+              icon={<ArrowRight className="w-4 h-4 rtl:rotate-180" />}
+            >
+              {t.common.viewAll}
+            </Button>
           </div>
+
+          {/* Premium Layered Coverflow Carousel Component */}
+          <ProjectCarousel projects={projectsData} />
         </Container>
       </section>
 
-      {/* 3. SERVICES OVERVIEW — EDITORIAL NUMBERED SHOWCASE (NO GENERIC CARDS) */}
-      <section className="relative py-28 bg-[#090E1C]/80 border-t border-[#AEBBD0]/10">
+      {/* 3. CREATIVE & MARKETING CAPABILITIES — EDITORIAL NUMBERED SHOWCASE */}
+      <section className="relative py-24 sm:py-28 bg-[#090E1C]/80 border-t border-[#AEBBD0]/10">
         <Container>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <SectionHeading
@@ -261,154 +229,64 @@ export const HomePage: React.FC = () => {
         </Container>
       </section>
 
-      {/* 4. SELECTED WORK — BESPOKE MONOGRAPHS (DISTINCT VISUAL DIRECTIONS) */}
-      <section className="relative py-28 border-t border-[#AEBBD0]/10">
+      {/* 4. ABOUT PREVIEW SECTION — EDITORIAL SPLIT */}
+      <section className="relative py-24 sm:py-28 border-t border-[#AEBBD0]/10 overflow-hidden">
         <Container>
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <SectionHeading
-              eyebrow={t.home.workTag}
-              title={t.home.workTitle}
-              description={t.home.workSub}
-            />
-            <Button
-              to="/work"
-              variant="secondary"
-              icon={<ArrowRight className="w-4 h-4 rtl:rotate-180" />}
-            >
-              {t.common.viewAll}
-            </Button>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            {/* Narrative Column */}
+            <div className="lg:col-span-7 flex flex-col items-start space-y-6">
+              <SectionHeading
+                eyebrow={t.home.aboutTag}
+                title={t.home.aboutHeadline}
+                description={t.home.aboutBody}
+              />
+              <p className="text-base text-[#AEBBD0]/80 leading-relaxed max-w-2xl font-light">
+                {t.home.aboutSecondary}
+              </p>
 
-          <div className="space-y-16">
-            {/* Project 01: Cultural Destination — Grand Architectural Framing */}
-            <article className="p-8 sm:p-12 rounded-3xl bg-[#101E38]/50 border border-[#AEBBD0]/15 hover:border-[#48D9E8]/40 transition-all duration-500 shadow-2xl">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div className="lg:col-span-7 rounded-2xl overflow-hidden aspect-[16/10] bg-[#080D1B] relative">
-                  <img
-                    src={projectsData[0].heroImage}
-                    alt={projectsData[0].title[language]}
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out hover:scale-105"
-                  />
-                  <div className="absolute top-3 start-3">
-                    <span className="px-3 py-1 rounded-full bg-[#080D1B]/90 backdrop-blur-md text-[11px] font-medium text-[#48D9E8] border border-[#48D9E8]/30">
-                      Concept Project / مشروع تصوري
+              <div className="pt-2">
+                <Button
+                  to="/about"
+                  variant="cyan"
+                  icon={<ArrowRight className="w-4 h-4 rtl:rotate-180" />}
+                >
+                  {t.common.learnMore}
+                </Button>
+              </div>
+            </div>
+
+            {/* Editorial Principle Card */}
+            <div className="lg:col-span-5 relative">
+              <div className="relative p-8 sm:p-10 rounded-3xl bg-[#101E38]/60 border border-[#AEBBD0]/15 shadow-2xl overflow-hidden">
+                <div className="relative z-10 flex flex-col gap-6">
+                  <div className="flex items-center justify-between pb-6 border-b border-[#AEBBD0]/10">
+                    <span className="text-xs uppercase tracking-widest text-[#AEBBD0]/60 font-inter">
+                      {t.home.quoteTitle}
                     </span>
+                    <span className="text-xs text-[#48D9E8] font-mono">01 // CREATIVE PRINCIPLE</span>
                   </div>
-                </div>
-                <div className="lg:col-span-5 space-y-5">
-                  <div className="flex items-center justify-between text-xs font-mono text-[#AEBBD0]/70">
-                    <span className="text-[#48D9E8] font-bold">MONOGRAPH 01</span>
-                    <span>{projectsData[0].refCode}</span>
-                  </div>
-                  <h3 className="headline-font text-2xl sm:text-3xl font-bold text-[#F5F7FC]">
-                    {projectsData[0].title[language]}
-                  </h3>
-                  <p className="text-sm text-[#AEBBD0] leading-relaxed">
-                    {projectsData[0].shortDescription[language]}
-                  </p>
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {projectsData[0].disciplines[language].slice(0, 3).map((d, i) => (
-                      <span key={i} className="text-xs px-2.5 py-1 rounded bg-[#080D1B] border border-[#AEBBD0]/10 text-[#AEBBD0]">
-                        {d}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="pt-4">
-                    <Button to={`/work/${projectsData[0].slug}`} variant="primary" icon={<ArrowRight className="w-4 h-4 rtl:rotate-180" />}>
-                      {t.common.exploreProject}
-                    </Button>
+
+                  <blockquote className="headline-font text-xl sm:text-2xl font-semibold text-[#F5F7FC] leading-relaxed italic">
+                    {t.home.quoteText}
+                  </blockquote>
+
+                  <div className="flex items-center gap-3 pt-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#168BFF]" />
+                    <span className="text-xs text-[#AEBBD0]">
+                      {language === 'ar'
+                        ? 'رؤية إبداعية واستراتيجية من أبوظبي بمعايير عالمية'
+                        : 'Strategic and creative vision based in Abu Dhabi with global standards'}
+                    </span>
                   </div>
                 </div>
               </div>
-            </article>
-
-            {/* Project 02 & 03: Split Asymmetric Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Future Mobility — Technical HUD Style */}
-              <article className="p-8 rounded-3xl bg-[#101E38]/40 border border-[#AEBBD0]/15 hover:border-[#48D9E8]/40 transition-all flex flex-col justify-between shadow-xl">
-                <div className="space-y-6">
-                  <div className="relative rounded-2xl overflow-hidden aspect-[16/9] bg-[#080D1B]">
-                    <img
-                      src={projectsData[1].heroImage}
-                      alt={projectsData[1].imageAlt ? projectsData[1].imageAlt[language] : projectsData[1].title[language]}
-                      className="w-full h-full object-cover object-center transition-transform duration-700 ease-out hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#080D1B]/80 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute top-3 start-3">
-                      <span className="px-3 py-1 rounded-full bg-[#080D1B]/90 backdrop-blur-md text-[11px] font-medium text-[#48D9E8] border border-[#48D9E8]/30">
-                        Concept Project / مشروع تصوري
-                      </span>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    <span className="text-xs font-mono text-[#168BFF] uppercase tracking-wider block">
-                      {projectsData[1].category[language]}
-                    </span>
-                    <h3 className="headline-font text-2xl font-bold text-[#F5F7FC]">
-                      {projectsData[1].title[language]}
-                    </h3>
-                    <p className="text-sm text-[#AEBBD0] leading-relaxed">
-                      {projectsData[1].shortDescription[language]}
-                    </p>
-                  </div>
-                </div>
-                <div className="pt-6 mt-6 border-t border-[#AEBBD0]/10 flex items-center justify-between">
-                  <Link
-                    to={`/work/${projectsData[1].slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#168BFF] hover:text-[#48D9E8] transition-colors"
-                  >
-                    <span>{t.common.exploreProject}</span>
-                    <ArrowRight className="w-3.5 h-3.5 rtl:rotate-180" />
-                  </Link>
-                  <span className="text-xs font-mono text-[#AEBBD0]/60">Level 5 Autonomy</span>
-                </div>
-              </article>
-
-              {/* Digital Culture — Generative Media Canvas */}
-              <article className="p-8 rounded-3xl bg-[#101E38]/40 border border-[#AEBBD0]/15 hover:border-[#48D9E8]/40 transition-all flex flex-col justify-between shadow-xl">
-                <div className="space-y-6">
-                  <div className="relative rounded-2xl overflow-hidden aspect-[16/9] bg-[#080D1B]">
-                    <img
-                      src={projectsData[2].heroImage}
-                      alt={projectsData[2].title[language]}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute top-3 start-3">
-                      <span className="px-3 py-1 rounded-full bg-[#080D1B]/90 text-[11px] font-medium text-[#48D9E8] border border-[#48D9E8]/30">
-                        Concept Project
-                      </span>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    <span className="text-xs font-mono text-[#48D9E8] uppercase tracking-wider block">
-                      {projectsData[2].category[language]}
-                    </span>
-                    <h3 className="headline-font text-2xl font-bold text-[#F5F7FC]">
-                      {projectsData[2].title[language]}
-                    </h3>
-                    <p className="text-sm text-[#AEBBD0] leading-relaxed">
-                      {projectsData[2].shortDescription[language]}
-                    </p>
-                  </div>
-                </div>
-                <div className="pt-6 mt-6 border-t border-[#AEBBD0]/10 flex items-center justify-between">
-                  <Link
-                    to={`/work/${projectsData[2].slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#168BFF] hover:text-[#48D9E8] transition-colors"
-                  >
-                    <span>{t.common.exploreProject}</span>
-                    <ArrowRight className="w-3.5 h-3.5 rtl:rotate-180" />
-                  </Link>
-                  <span className="text-xs font-mono text-[#AEBBD0]/60">60 FPS WebGL</span>
-                </div>
-              </article>
             </div>
           </div>
         </Container>
       </section>
 
       {/* 5. METHODOLOGY (4 SEQUENTIAL STEPS WITH HAIRLINE) */}
-      <section className="relative py-28 bg-[#090E1C]/80 border-t border-[#AEBBD0]/10">
+      <section className="relative py-24 sm:py-28 bg-[#090E1C]/80 border-t border-[#AEBBD0]/10">
         <Container>
           <div className="max-w-2xl mb-16">
             <SectionHeading
@@ -425,8 +303,8 @@ export const HomePage: React.FC = () => {
                 title: { ar: 'اكتشف', en: 'Discover' },
                 sub: 'DISCOVER',
                 desc: {
-                  ar: 'نفهم الفكرة والسياق والهدف، ونغوص في طبيعة الجمهور المستهدف لخلق قاعدة صلبة.',
-                  en: 'Immersing in vision, culture, and audience expectations to construct an unshakeable ground.',
+                  ar: 'ندرس أهداف المشروع، تحديات السوق، وسلوك الجمهور المستهدف لبناء قاعدة استراتيجية متينة.',
+                  en: 'Immersing in vision, culture, and market realities to construct an unshakeable ground.',
                 },
               },
               {
@@ -434,7 +312,7 @@ export const HomePage: React.FC = () => {
                 title: { ar: 'حدّد', en: 'Define' },
                 sub: 'DEFINE',
                 desc: {
-                  ar: 'نرسم الاتجاه والاستراتيجية المناسبة، ونحدد القنوات والرسائل الأساسية بوضوح تام.',
+                  ar: 'نرسم الاتجاه الاستراتيجي المناسب، ونحدد القنوات والرسائل الأساسية بوضوح تام.',
                   en: 'Mapping trajectory, message architecture, and core brand milestones with precision.',
                 },
               },
@@ -443,8 +321,8 @@ export const HomePage: React.FC = () => {
                 title: { ar: 'ابتكر', en: 'Create' },
                 sub: 'CREATE',
                 desc: {
-                  ar: 'نحوّل الاستراتيجية إلى حلول وتجارب إبداعية، تدمج التصميم البصري بالإنتاج المبتكر.',
-                  en: 'Synthesizing strategy into bespoke identities and experiential environments.',
+                  ar: 'نحوّل الاستراتيجية إلى تصاميم وتجارب بصرية ملهمة تجمع بين التوجيه الفني الرفيع والإنتاج المتقن.',
+                  en: 'Synthesizing strategy into bespoke identities, tactile packaging, and digital environments.',
                 },
               },
               {
@@ -452,7 +330,7 @@ export const HomePage: React.FC = () => {
                 title: { ar: 'نفّذ', en: 'Deliver' },
                 sub: 'DELIVER',
                 desc: {
-                  ar: 'نصقل التفاصيل ونجهّز العمل للتقديم بأعلى معايير الإتقان لضمان التأثير المرجو.',
+                  ar: 'نصقل كافة المخرجات وندير الإطلاق عبر القنوات المختارة لضمان أعلى مستويات الجودة والتأثير.',
                   en: 'Refining touchpoints to world-class benchmarks for sustained institutional impact.',
                 },
               },
@@ -471,7 +349,7 @@ export const HomePage: React.FC = () => {
                   <span className="text-[11px] font-mono text-[#48D9E8] uppercase tracking-wider block mb-3">
                     {step.sub}
                   </span>
-                  <p className="text-sm text-[#AEBBD0] leading-relaxed">
+                  <p className="text-sm text-[#AEBBD0] leading-relaxed font-light">
                     {step.desc[language]}
                   </p>
                 </div>
@@ -482,8 +360,8 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 6. CLOSING CTA SECTION WITH SUBTLE COSMIC CROP */}
-      <section className="relative py-28 border-t border-[#AEBBD0]/10 overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-20">
+      <section className="relative py-24 sm:py-28 border-t border-[#AEBBD0]/10 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
           <img
             src={backgroundAsset}
             alt="Stellar Media Cosmic Nebula"

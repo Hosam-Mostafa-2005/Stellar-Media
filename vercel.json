@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/contact/status",
+      "destination": "/api/contact/status"
+    },
+    {
+      "source": "/api/contact",
+      "destination": "/api/contact"
+    },
+    {
+      "source": "/((?!api/|assets/|.*\\..*).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

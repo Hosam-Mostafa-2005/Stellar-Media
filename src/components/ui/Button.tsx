@@ -49,7 +49,7 @@ export const Button: React.FC<ButtonProps> = ({
     <>
       {icon && iconPosition === 'start' && <span className="shrink-0">{icon}</span>}
       <span>{children}</span>
-      {icon && iconPosition === 'end' && <span className="shrink-0 rtl:rotate-180">{icon}</span>}
+      {icon && iconPosition === 'end' && <span className="shrink-0">{icon}</span>}
     </>
   );
 
