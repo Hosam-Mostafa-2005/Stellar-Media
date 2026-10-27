@@ -12,15 +12,21 @@ import { ProjectDetailPage } from './pages/ProjectDetailPage';
 import { ContactPage } from './pages/ContactPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
-// Helper component to scroll to top upon page navigation
+// Helper component to scroll to top upon page navigation and manage scroll restoration
 const ScrollToTop: React.FC = () => {
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+  }, []);
 
   useEffect(() => {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: 'smooth',
+      behavior: 'instant',
     });
   }, [pathname]);
 

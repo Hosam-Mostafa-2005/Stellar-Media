@@ -10,6 +10,22 @@ export const SiteHeader: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
+  const scrollToTopSmoothly = () => {
+    const isReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: isReduced ? "auto" : "smooth",
+    });
+  };
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, to: string) => {
+    if (to === "/" && location.pathname === "/") {
+      e.preventDefault();
+      scrollToTopSmoothly();
+    }
+  };
+
   const navLinks = [
     { to: "/", label: t.nav.home },
     { to: "/about", label: t.nav.about },
@@ -25,6 +41,7 @@ export const SiteHeader: React.FC = () => {
           {/* Logo / Brand Wordmark */}
           <Link
             to="/"
+            onClick={(e) => handleNavClick(e, "/")}
             className="flex items-center gap-3 sm:gap-3.5 lg:gap-4 group focus:outline-none focus:ring-2 focus:ring-[#48D9E8] rounded-xl p-1 shrink-0"
             aria-label={
               language === "ar"
@@ -67,6 +84,7 @@ export const SiteHeader: React.FC = () => {
                 <NavLink
                   key={link.to}
                   to={link.to}
+                  onClick={(e) => handleNavClick(e, link.to)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-[#48D9E8] ${
                     isActive
                       ? "bg-[#101E38] text-[#48D9E8] font-semibold shadow-[0_0_15px_rgba(72,217,232,0.15)] border border-[#48D9E8]/30"
@@ -127,7 +145,10 @@ export const SiteHeader: React.FC = () => {
                 <NavLink
                   key={link.to}
                   to={link.to}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    setMobileMenuOpen(false);
+                    handleNavClick(e, link.to);
+                  }}
                   className={`px-4 py-3 rounded-lg text-base font-medium transition-all ${
                     isActive
                       ? "bg-[#101E38] text-[#48D9E8] border border-[#48D9E8]/30 font-semibold"

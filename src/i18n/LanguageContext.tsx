@@ -16,20 +16,30 @@ const STORAGE_KEY = 'stellar_media_lang';
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved === 'ar' || saved === 'en') {
-        return saved;
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const saved = window.localStorage.getItem(STORAGE_KEY);
+        // Only accept explicit 'en' or 'ar'; otherwise default to Arabic
+        if (saved === 'en') {
+          return 'en';
+        }
+        if (saved === 'ar') {
+          return 'ar';
+        }
       }
     } catch {
-      // Ignore localStorage errors
+      // Ignore localStorage errors (e.g. private browsing or sandboxed iframe)
     }
-    return 'ar'; // Default language Arabic
+    // Default to Arabic on first visit or missing/invalid stored preference
+    return 'ar';
   });
 
   const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
+    const validLang: Language = lang === 'en' ? 'en' : 'ar';
+    setLanguageState(validLang);
     try {
-      localStorage.setItem(STORAGE_KEY, lang);
+      if (typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.setItem(STORAGE_KEY, validLang);
+      }
     } catch {
       // Ignore
     }
@@ -48,8 +58,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       : 'Stellar Media | Creative & Digital Marketing Agency — Abu Dhabi';
     if (isArabic) {
       document.body.classList.remove('en-mode');
+      document.documentElement.classList.remove('en-mode');
     } else {
       document.body.classList.add('en-mode');
+      document.documentElement.classList.add('en-mode');
     }
   }, [language]);
 

@@ -9,6 +9,26 @@
     />
     <link rel="icon" type="image/png" href="/stellar_logo.png" />
     <title>Stellar Media | وكالة ستيلار للإبداع والتسويق الرقمي — أبوظبي</title>
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('stellar_media_lang');
+          if (saved === 'en') {
+            document.documentElement.lang = 'en';
+            document.documentElement.dir = 'ltr';
+            document.title = 'Stellar Media | Creative & Digital Marketing Agency — Abu Dhabi';
+            document.documentElement.classList.add('en-mode');
+          } else {
+            document.documentElement.lang = 'ar';
+            document.documentElement.dir = 'rtl';
+            document.documentElement.classList.remove('en-mode');
+          }
+        } catch (e) {
+          document.documentElement.lang = 'ar';
+          document.documentElement.dir = 'rtl';
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

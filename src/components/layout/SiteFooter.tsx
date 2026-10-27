@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { servicesData } from "../../data/services";
 import { projectsData } from "../../data/projects";
@@ -9,6 +9,19 @@ import stellarLogo from "../../assets/stellar_logo.png";
 
 export const SiteFooter: React.FC = () => {
   const { language, t } = useLanguage();
+  const location = useLocation();
+
+  const handleHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (location.pathname === "/") {
+      e.preventDefault();
+      const isReduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: isReduced ? "auto" : "smooth",
+      });
+    }
+  };
 
   return (
     <footer className="relative bg-[#060A16] border-t border-[#AEBBD0]/15 pt-20 pb-12 overflow-hidden text-sm">
@@ -21,6 +34,7 @@ export const SiteFooter: React.FC = () => {
           <div className="lg:col-span-4 space-y-6">
             <Link
               to="/"
+              onClick={handleHomeClick}
               className="flex items-center gap-3 group"
               aria-label={
                 language === "ar"
@@ -70,6 +84,7 @@ export const SiteFooter: React.FC = () => {
               <li>
                 <Link
                   to="/"
+                  onClick={handleHomeClick}
                   className="text-[#AEBBD0] hover:text-[#48D9E8] transition-colors"
                 >
                   {t.nav.home}
